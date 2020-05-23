@@ -23,7 +23,7 @@
 		<freemarker.version>2.3.30</freemarker.version>
 		<velocity.version>2.2</velocity.version>
 		<druid.version>1.1.20</druid.version>
-		<shiro.version>1.4.0</shiro.version>
+		<shiro.version>1.5.3</shiro.version>
 	</properties>
 	
 	<dependencies>
