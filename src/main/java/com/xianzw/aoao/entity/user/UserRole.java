@@ -18,16 +18,19 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_user_role")
+@TableName("u_user_role")
 public class UserRole extends BaseEntity {
 
-    private static final long serialVersionUID=1L;
 
     /**
-     * roleId
-     */
+	 * 
+	 */
+	private static final long serialVersionUID = 1722080610091372317L;
+
+	//角色id
     private String roleId;
 
+    //用户id
     private String userId;
 
 

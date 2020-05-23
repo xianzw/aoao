@@ -2,10 +2,10 @@ package com.xianzw.aoao.entity.common;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 
 import lombok.Data;
@@ -22,36 +22,35 @@ public class BaseEntity implements Serializable {
 	
 	public static final String ID = "id";
 	public static final String CREATEBY = "createby";
-	public static final String CREATE_COMPANY_ID = "create_company_id";
-	public static final String CREATE_COMPANY_DEPARTMENT_ID = "create_company_department_id";
-	public static final String CREATE_ORGANIZATION_ID = "create_organization_id";
 	public static final String CREATE_DATE = "create_date";
-	public static final String CREATE_DATE_UTC = "create_date_u_t_c";
-	public static final String DEL_FLAG = "del_flag";
+	public static final String UPDATE_DATE = "update_date";
+	public static final String DELETED = "deleted";
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4560331540586236532L;
 
-	@TableId(type=IdType.UUID)
-	private String id;//id
+	//id
+	@TableId(type=IdType.ASSIGN_UUID)
+	private String id;
 	
-	private LocalDate createDate;//新增时间
+	//新增时间
+	private LocalDateTime createDate;
 	
-	private LocalDate updateDate;//更新时间
+	//更新时间
+	private LocalDateTime updateDate;
 	
-	private String createby;//创建人
+	//创建人
+	private String createby;
 	
-	private String createCompanyDepartmentId;//创建部门Id
+	//更新人
+	private String updateby;
 	
-	private String createCompanyId;//创建企业Id
+	//0:有效 1:无效
+	private Integer deleted = 0;
 	
-	private String createOrganizationId;//直属机构id 个人用户：个人id，企业用户：有部门为部门id，无部门为公司id
-	
-	@TableLogic
-	private Integer delFlag = 0;//0:有效 1:无效
-	
+	//锁0:无锁 1:已锁定
 	@Version
-	private Integer version = 0;//锁
+	private Integer version = 0;
 }

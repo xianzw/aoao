@@ -16,34 +16,24 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("t_user")
+@TableName("u_user")
 public class User extends BaseEntity {
 
     private static final long serialVersionUID=1L;
 
-    /**
-     * 名称
-     */
+    //名称
     private String name;
 
-    /**
-     * 用户名
-     */
+    //用户名
     private String username;
 
-    /**
-     * 密码
-     */
+    //密码
     private String password;
 
-    /**
-     * 加密盐
-     */
+    //加密盐
     private String salt;
 
-    /**
-     * 锁定
-     */
-    private Boolean locked;
+    //锁定
+    private Integer locked = 0;
 
 }

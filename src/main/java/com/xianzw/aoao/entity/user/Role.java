@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_role")
+@TableName("u_role")
 public class Role extends BaseEntity {
 
     private static final long serialVersionUID=1L;
@@ -26,7 +26,7 @@ public class Role extends BaseEntity {
     /**
      * 角色名称
      */
-    private String name;
+    private String roleName;
 
     /**
      * 排序
@@ -36,12 +36,6 @@ public class Role extends BaseEntity {
     /**
      * 是否启用
      */
-    private Boolean enable;
-
-    /**
-     * 权限类型
-     */
-    private Integer type;
-
+    private Integer enable = 0;
 
 }

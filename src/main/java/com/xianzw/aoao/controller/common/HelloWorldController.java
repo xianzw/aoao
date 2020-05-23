@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-public class HelloWorldController {
+public class HelloWorldController extends BaseController{
 
 	
 	@RequestMapping("helloWorld")
-	public String helloWorld() {
-		return "helloWorld";
+	public HttpResult<String> helloWorld() {
+		return responseSuccess("helloWo");
 	}
 	
 }

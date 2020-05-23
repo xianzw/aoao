@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.xianzw.aoao.common.BusinessException;
+import com.xianzw.aoao.common.ServiceException;
 
 /**
  * @version V1.0
@@ -102,7 +102,7 @@ public class HttpUtil {
 
 
     // HTTP GET请求
-    public static String sendGet(String url) throws IOException, BusinessException {
+    public static String sendGet(String url) throws IOException, ServiceException {
 
 
         URL obj = new URL(url);
@@ -119,7 +119,7 @@ public class HttpUtil {
         con.setRequestProperty("accept", "application/xml");
 
         if (con.getResponseCode() == 400) {
-            throw new BusinessException("700002","LEI验证失败");//LEI验证失败
+            throw new ServiceException("700002","LEI验证失败");//LEI验证失败
         }
 
         BufferedReader in = new BufferedReader(
