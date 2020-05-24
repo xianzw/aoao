@@ -1,4 +1,4 @@
-package com.xianzw.aoao.shiro;
+package com.xianzw.aoao.config.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xianzw.aoao.controller.common.HttpResult;

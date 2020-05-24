@@ -5,13 +5,13 @@ import lombok.Setter;
 
 /**
  * 
- * @description Service异常信息
+ * @description 自定义异常信息
  * @author xianzw
  * @time 2019年2月27日下午4:20:06
  */
 @Getter
 @Setter
-public class ServiceException extends Exception{
+public class CustomException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,7 @@ public class ServiceException extends Exception{
 	
 	private String exceptionMessage;//异常信息
 	
-	public ServiceException(String exceptionCode,String exceptionMessage){
+	public CustomException(String exceptionCode,String exceptionMessage){
 		super();
 		this.exceptionCode = exceptionCode;
 		this.exceptionMessage = exceptionMessage;

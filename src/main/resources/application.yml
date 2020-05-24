@@ -45,3 +45,13 @@ mybatis-plus:
       logic-delete-field: deleted  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      
+token:
+  #  token过期时间，单位分钟
+  tokenExpireTime: 120
+  #  RefreshToken过期时间，单位：分钟, 24*60=1440
+  refreshTokenExpireTime: 1440
+  #  shiro缓存有效期，单位分钟,2*60=120
+  shiroCacheExpireTime: 120
+  #  token加密密钥
+  secretKey: storywebkey      

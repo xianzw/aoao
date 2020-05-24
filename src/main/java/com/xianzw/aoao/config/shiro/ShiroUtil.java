@@ -1,4 +1,4 @@
-package com.xianzw.aoao.shiro;
+package com.xianzw.aoao.config.shiro;
 
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;

@@ -12,6 +12,7 @@ public class ResultCode {
 	public static final String RESULT_CODE_NOT_LOGGED_IN = "10300";  // 未登录
 	public static final String RESULT_CODE_LOGGED_IN_SUCCESS = "10301";  // 登录成功
 	public static final String RESULT_CODE_LOGGED_IN_ERROR = "10302";  // 用户名或密码错误
+	public static final String RESULT_CODE_NO_ACCESS = "10400";  // 无权访问
     public static final String RESULT_CODE_SERVER_ERROR = "500";  // 没有对应结果
     
     public static final String DEFAULT_MESSAGE_SUCCESS = "SUCCESS";

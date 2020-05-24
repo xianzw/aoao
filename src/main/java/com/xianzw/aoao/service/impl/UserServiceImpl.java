@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xianzw.aoao.common.ServiceException;
+import com.xianzw.aoao.config.shiro.ShiroUtil;
 import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.mapper.user.UserMapper;
 import com.xianzw.aoao.service.IUserService;
-import com.xianzw.aoao.shiro.ShiroUtil;
 import com.xianzw.aoao.utils.BeanUtil;
 
 import cn.hutool.core.util.ObjectUtil;

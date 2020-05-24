@@ -1,4 +1,4 @@
-package com.xianzw.aoao.shiro;
+package com.xianzw.aoao.config.shiro;
 
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
