@@ -13,6 +13,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
@@ -29,6 +31,7 @@ import com.xianzw.aoao.utils.PropertiesUtil;
  * @author xianzw
  * @date 2020年5月24日下午12:34:15
  */
+@Component
 public class JwtFilter extends BasicHttpAuthenticationFilter {
     /**
      * logger
@@ -134,8 +137,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        // 跨域已经在OriginFilter处全局配置
-        /*HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
+        HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
@@ -144,8 +146,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
             httpServletResponse.setStatus(HttpStatus.OK.value());
             return false;
-        }*/
-        return super.preHandle(request, response);
+        }
+    	boolean preHandle = super.preHandle(request, response);
+        return preHandle;
     }
 
     /**

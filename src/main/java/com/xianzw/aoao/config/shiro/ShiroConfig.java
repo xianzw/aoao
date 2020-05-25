@@ -1,7 +1,6 @@
 package com.xianzw.aoao.config.shiro;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -13,7 +12,6 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -31,15 +29,6 @@ import com.xianzw.aoao.config.shiro.cache.CustomCacheManager;
 @Configuration
 public class ShiroConfig {
 
-	//不加这个注解不生效，具体不详
-    @Bean
-    @ConditionalOnMissingBean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
-        defaultAAP.setProxyTargetClass(true);
-        return defaultAAP;
-    }
-    
     //将自己的验证方式加入容器
     @Bean
     public CustomRealm myShiroRealm() {
@@ -94,30 +83,37 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
        
-        Map<String, String> map = new HashMap<>();
-        //登出
-//        map.put("/logout", "logout");
-        //对所有用户认证
-        map.put("/signup", "anon");
-        map.put("/login", "anon");
-        map.put("/**", "authc");
-        //登录
-//        shiroFilterFactoryBean.setLoginUrl("/login");
-        //首页
-//        shiroFilterFactoryBean.setSuccessUrl("/index");
-        //错误页面，认证不通过跳转
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
+        //url拦截规则
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(definitionMap());
         
         //自定义拦截器
-        Map<String, Filter> customFilterMap = new LinkedHashMap<>();
-        customFilterMap.put("usernamePasswordToken", new JwtFilter());
-        customFilterMap.put("form", new CORSAuthenticationFilter());
-        shiroFilterFactoryBean.setFilters(customFilterMap);
+        shiroFilterFactoryBean.setFilters(filterMap());
         
         //securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         return shiroFilterFactoryBean;
+    }
+    
+    
+    /**
+     * 自定义拦截器，处理所有请求
+     */
+    private Map<String, Filter> filterMap() {
+      Map<String, Filter> filterMap = new HashMap<>();
+      filterMap.put("jwt", new JwtFilter());
+      return filterMap;
+    }
+    
+    /**
+     * url拦截规则
+     */
+    private Map<String, String> definitionMap() {
+		Map<String, String> definitionMap = new HashMap<>();
+		//对所有用户认证
+		definitionMap.put("/signup", "anon");
+		definitionMap.put("/login", "anon");
+		definitionMap.put("/**", "jwt");
+      return definitionMap;
     }
     
     /**
@@ -133,6 +129,18 @@ public class ShiroConfig {
     }
     
     /**
+     * 开启注解
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
+        defaultAAP.setProxyTargetClass(true);
+        return defaultAAP;
+    }
+    
+    /**
      * 凭证匹配器
      * @return
      */
@@ -142,21 +150,6 @@ public class ShiroConfig {
     	hashedCredentialsMatcher.setHashAlgorithmName(ShiroUtil.PWD_ALGORITHM_NAME);
     	hashedCredentialsMatcher.setHashIterations(ShiroUtil.PWD_HASH_ITERATIONS);
     	return hashedCredentialsMatcher;
-    }
-
-    /**
-     * Session Cookie
-     */
-    @Bean
-    public SimpleCookie simpleCookie() {
-        SimpleCookie cookie = new SimpleCookie();
-        // Session Cookie 名称
-        cookie.setName("aoao");
-        // Session 存活时间
-        cookie.setMaxAge(10);
-        // 设置 Cookie 只读
-        cookie.setHttpOnly(true);
-        return cookie;
     }
 
 }
