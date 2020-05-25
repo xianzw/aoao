@@ -1,16 +1,17 @@
 package com.xianzw.aoao.config.shiro;
 
-import com.alibaba.fastjson.JSONObject;
-import com.xianzw.aoao.controller.common.HttpResult;
-import com.xianzw.aoao.controller.common.ResultCode;
-
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+
+import com.alibaba.fastjson.JSON;
+import com.xianzw.aoao.controller.common.HttpResult;
+import com.xianzw.aoao.controller.common.ResultCode;
 
 public class CORSAuthenticationFilter extends FormAuthenticationFilter {
 
@@ -46,7 +47,7 @@ public class CORSAuthenticationFilter extends FormAuthenticationFilter {
         HttpResult httpResult = new HttpResult();
         httpResult.setResultCode(ResultCode.RESULT_CODE_NOT_LOGGED_IN);
         httpResult.setResultMessage("请先登录系统!");
-        writer.write(JSONObject.toJSONString(httpResult));
+        writer.write(JSON.toJSONString(httpResult));
         writer.close();
         return false;
     }

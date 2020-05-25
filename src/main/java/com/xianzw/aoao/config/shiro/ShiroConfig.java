@@ -7,12 +7,9 @@ import java.util.Map;
 import javax.servlet.Filter;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -47,6 +44,7 @@ public class ShiroConfig {
     @Bean
     public CustomRealm myShiroRealm() {
         CustomRealm customRealm = new CustomRealm();
+        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return customRealm;
     }
     
@@ -113,7 +111,8 @@ public class ShiroConfig {
         
         //自定义拦截器
         Map<String, Filter> customFilterMap = new LinkedHashMap<>();
-        customFilterMap.put("jwt", new JwtFilter());
+        customFilterMap.put("usernamePasswordToken", new JwtFilter());
+        customFilterMap.put("form", new CORSAuthenticationFilter());
         shiroFilterFactoryBean.setFilters(customFilterMap);
         
         //securityManager

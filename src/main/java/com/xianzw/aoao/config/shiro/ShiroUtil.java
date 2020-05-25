@@ -11,7 +11,7 @@ import org.apache.shiro.util.ByteSource;
  */
 public class ShiroUtil {
 
-    public static final Integer PWD_HASH_ITERATIONS  = 825;
+    public static final Integer PWD_HASH_ITERATIONS  = 3;
     public static final String PWD_ALGORITHM_NAME  = "sha-256";
 	
     
@@ -23,6 +23,7 @@ public class ShiroUtil {
      * @return
      */
     public static String generatePwdEncrypt(String pwd, String salt) {
+    	
         return new SimpleHash(PWD_ALGORITHM_NAME, pwd, ByteSource.Util.bytes(salt), PWD_HASH_ITERATIONS).toHex();
     }
 
