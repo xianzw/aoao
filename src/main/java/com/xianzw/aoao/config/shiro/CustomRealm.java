@@ -13,8 +13,11 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.entity.user.User;
+import com.xianzw.aoao.model.dto.login.LoginUserDTO;
 import com.xianzw.aoao.service.IUserService;
+import com.xianzw.aoao.utils.BeanUtil;
 import com.xianzw.aoao.utils.ObjectUtil;
 
 /**
@@ -59,7 +62,9 @@ public class CustomRealm extends AuthorizingRealm{
             throw new UnknownAccountException("当前登录用户不存在");
         }
 		
-		return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
+        
+		return simpleAuthenticationInfo;
 	}
 
 }

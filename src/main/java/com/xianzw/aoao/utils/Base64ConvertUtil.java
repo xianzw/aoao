@@ -35,5 +35,5 @@ public class Base64ConvertUtil {
         byte[] decodeBytes = Base64.getDecoder().decode(str.getBytes("utf-8"));
         return new String(decodeBytes);
     }
-
+    
 }

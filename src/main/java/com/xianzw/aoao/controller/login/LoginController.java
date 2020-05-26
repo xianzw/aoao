@@ -52,13 +52,11 @@ public class LoginController extends BaseController{
         UsernamePasswordToken token = new UsernamePasswordToken(userVO.getUsername(), userVO.getPassword());
         SecurityUtils.getSubject().login(token);
 
-
-        //设置session时间
-        SecurityUtils.getSubject().getSession().setTimeout(1000*60*30);
-
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
-        JedisUtil.setObject(Constant.PREFIX_SHIRO_REFRESH_TOKEN + userVO.getUsername(), currentTimeMillis, Integer.parseInt(refreshTokenExpireTime));
         String tokenId = JwtUtil.sign(userVO.getUsername(), currentTimeMillis);
+        JedisUtil.setObject(Constant.PREFIX_SHIRO_REFRESH_TOKEN + userVO.getUsername(), currentTimeMillis, Integer.parseInt(refreshTokenExpireTime));
+
+        
         response.setHeader("Authorization", tokenId);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         

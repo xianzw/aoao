@@ -1,24 +1,21 @@
-package com.xianzw.aoao.model.vo.common;
+package com.xianzw.aoao.model.dto.login.common;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.Version;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 基础VO
+ * 基础DTO
  * @author xianzw
  * @date 2020年5月23日下午8:49:02
  */
 @Getter
 @Setter
-public class BaseVO implements Serializable{
+public class BaseDTO implements Serializable{
 
 	/**
 	 * 
@@ -46,6 +43,5 @@ public class BaseVO implements Serializable{
 	//锁0:无锁 1:已锁定
 	@Version
 	private Integer version = 0;
-		
 	
 }

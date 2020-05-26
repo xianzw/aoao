@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xianzw.aoao.common.ServiceException;
+import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.controller.common.BaseController;
 import com.xianzw.aoao.controller.common.HttpResult;
 import com.xianzw.aoao.entity.user.User;
+import com.xianzw.aoao.model.dto.login.LoginUserDTO;
 import com.xianzw.aoao.service.IUserService;
 
 /**
@@ -28,9 +30,12 @@ public class UserController extends BaseController{
 	@Autowired
 	IUserService userService;
 	
+	
 	@RequestMapping("/helloWorld")
 	public HttpResult<List<User>> helloWorld() {
 		List<User> list = userService.list();
+		LoginUserDTO currentUser = UserContext.getCurrentUser();
+		System.out.println(currentUser);
 		return responseSuccess(list);
 	}
 	

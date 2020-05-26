@@ -3,6 +3,8 @@ package com.xianzw.aoao.config.jwt;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +23,16 @@ import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.xianzw.aoao.common.CustomException;
+import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.config.redis.JedisUtil;
 import com.xianzw.aoao.controller.common.HttpResult;
 import com.xianzw.aoao.controller.common.ResultCode;
+import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.model.constant.Constant;
+import com.xianzw.aoao.model.dto.login.LoginUserDTO;
+import com.xianzw.aoao.service.IUserService;
+import com.xianzw.aoao.service.impl.UserServiceImpl;
+import com.xianzw.aoao.utils.BeanUtil;
 import com.xianzw.aoao.utils.PropertiesUtil;
 
 /**
@@ -37,6 +46,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      * logger
      */
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+    
+    @Autowired
+    IUserService userService;
 
     /**
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
@@ -58,22 +70,21 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 // 认证出现异常，传递错误信息msg
                 String msg = e.getMessage();
                 // 获取应用异常(该Cause是导致抛出此throwable(异常)的throwable(异常))
-                Throwable throwable = e.getCause();
-                if (throwable instanceof SignatureVerificationException) {
+                if (e instanceof SignatureVerificationException) {
                     // 该异常为JWT的AccessToken认证失败(Token或者密钥不正确)
-                    msg = "Token或者密钥不正确(" + throwable.getMessage() + ")";
-                } else if (throwable instanceof TokenExpiredException) {
+                    msg = "Token或者密钥不正确(" + e.getMessage() + ")";
+                } else if (e instanceof TokenExpiredException) {
                     // 该异常为JWT的AccessToken已过期，判断RefreshToken未过期就进行AccessToken刷新
                     if (this.refreshToken(request, response)) {
                         return true;
                     } else {
-                        msg = "Token已过期(" + throwable.getMessage() + ")";
+                        msg = "Token已过期(" + e.getMessage() + ")";
                     }
                 } else {
                     // 应用异常不为空
-                    if (throwable != null) {
+                    if (e != null) {
                         // 获取应用异常msg
-                        msg = throwable.getMessage();
+                        msg = e.getMessage();
                     }
                 }
                 // Token认证失败直接返回Response信息
@@ -128,7 +139,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String token = this.getAuthzHeader(request);
         
         boolean verify = JwtUtil.verify(token);
+//        
+        String username = JwtUtil.getClaim(token, Constant.ACCOUNT);
         
+        LoginUserDTO loginUserDTO = new LoginUserDTO();
+        loginUserDTO.setUsername(username);
+        UserContext userContext= new UserContext(loginUserDTO);
         // 如果没有抛出异常则代表登入成功，返回true
         return verify;
     }
@@ -175,10 +191,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 JedisUtil.setObject(Constant.PREFIX_SHIRO_REFRESH_TOKEN + account, currentTimeMillis, Integer.parseInt(refreshTokenExpireTime));
                 // 刷新AccessToken，设置时间戳为当前最新时间戳
                 token = JwtUtil.sign(account, currentTimeMillis);
-                // 将新刷新的AccessToken再次进行Shiro的登录
-                JwtToken jwtToken = new JwtToken(token);
-                // 提交给UserRealm进行认证，如果错误他会抛出异常并被捕获，如果没有抛出异常则代表登入成功，返回true
-                this.getSubject(request, response).login(jwtToken);
                 // 最后将刷新的AccessToken存放在Response的Header中的Authorization字段返回
                 HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
                 httpServletResponse.setHeader("Authorization", token);
