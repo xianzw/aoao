@@ -3,7 +3,6 @@ package com.xianzw.aoao.controller.user;
 
 import java.util.List;
 
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +29,6 @@ public class UserController extends BaseController{
 	IUserService userService;
 	
 	@RequestMapping("/helloWorld")
-	@RequiresAuthentication
 	public HttpResult<List<User>> helloWorld() {
 		List<User> list = userService.list();
 		return responseSuccess(list);
