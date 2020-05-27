@@ -1,20 +1,20 @@
-package com.xianzw.aoao.model.dto.login.common;
+package com.xianzw.aoao.model.dto.common;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.Version;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 基础DTO
  * @author xianzw
  * @date 2020年5月23日下午8:49:02
  */
-@Getter
-@Setter
+@Data
+@Accessors(chain = true)
 public class BaseDTO implements Serializable{
 
 	/**

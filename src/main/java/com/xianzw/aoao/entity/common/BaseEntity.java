@@ -1,7 +1,6 @@
 package com.xianzw.aoao.entity.common;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -50,7 +49,7 @@ public class BaseEntity implements Serializable {
 	//0:有效 1:无效
 	private Integer deleted = 0;
 	
-	//锁0:无锁 1:已锁定
+	//乐观锁
 	@Version
 	private Integer version = 0;
 }

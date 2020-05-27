@@ -1,4 +1,4 @@
-package com.xianzw.aoao.service.impl;
+package com.xianzw.aoao.service.user.impl;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,7 @@ import com.xianzw.aoao.common.ServiceException;
 import com.xianzw.aoao.config.shiro.ShiroUtil;
 import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.mapper.user.UserMapper;
-import com.xianzw.aoao.service.IUserService;
+import com.xianzw.aoao.service.user.IUserService;
 import com.xianzw.aoao.utils.BeanUtil;
 
 import cn.hutool.core.util.ObjectUtil;

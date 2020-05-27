@@ -1,26 +1,23 @@
 package com.xianzw.aoao.model.dto.login;
 
-import com.xianzw.aoao.model.dto.login.common.BaseDTO;
+import com.xianzw.aoao.model.dto.common.BaseDTO;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
- * 登录用户
+ * 当前登录用户dto
  * @author xianzw
- * @date 2020年5月26日下午10:07:30
+ * @date 2020年5月27日上午9:22:43
+ *
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 public class LoginUserDTO extends BaseDTO{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8782454631060012294L;
-
+	private static final long serialVersionUID = -902815044484797247L;
+	
 	//名称
     private String name;
 

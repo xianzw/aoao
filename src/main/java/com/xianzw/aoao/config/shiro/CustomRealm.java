@@ -13,11 +13,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.entity.user.User;
-import com.xianzw.aoao.model.dto.login.LoginUserDTO;
-import com.xianzw.aoao.service.IUserService;
-import com.xianzw.aoao.utils.BeanUtil;
+import com.xianzw.aoao.service.user.IUserService;
 import com.xianzw.aoao.utils.ObjectUtil;
 
 /**

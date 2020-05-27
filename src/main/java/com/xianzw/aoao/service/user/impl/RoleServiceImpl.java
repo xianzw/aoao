@@ -1,11 +1,11 @@
-package com.xianzw.aoao.service.impl;
+package com.xianzw.aoao.service.user.impl;
 
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xianzw.aoao.entity.user.Role;
 import com.xianzw.aoao.mapper.user.RoleMapper;
-import com.xianzw.aoao.service.IRoleService;
+import com.xianzw.aoao.service.user.IRoleService;
 
 /**
  * <p>

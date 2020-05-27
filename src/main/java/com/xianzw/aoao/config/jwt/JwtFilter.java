@@ -3,8 +3,6 @@ package com.xianzw.aoao.config.jwt;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +25,8 @@ import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.config.redis.JedisUtil;
 import com.xianzw.aoao.controller.common.HttpResult;
 import com.xianzw.aoao.controller.common.ResultCode;
-import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.model.constant.Constant;
-import com.xianzw.aoao.model.dto.login.LoginUserDTO;
-import com.xianzw.aoao.service.IUserService;
-import com.xianzw.aoao.service.impl.UserServiceImpl;
-import com.xianzw.aoao.utils.BeanUtil;
+import com.xianzw.aoao.service.user.IUserService;
 import com.xianzw.aoao.utils.PropertiesUtil;
 
 /**
@@ -142,9 +136,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 //        
         String username = JwtUtil.getClaim(token, Constant.ACCOUNT);
         
-        LoginUserDTO loginUserDTO = new LoginUserDTO();
-        loginUserDTO.setUsername(username);
-        UserContext userContext= new UserContext(loginUserDTO);
+        UserContext userContext= new UserContext(username);
         // 如果没有抛出异常则代表登入成功，返回true
         return verify;
     }

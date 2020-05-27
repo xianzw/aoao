@@ -4,16 +4,18 @@ import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.model.vo.common.BaseVO;
 import com.xianzw.aoao.utils.BeanUtil;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 用户VO
  * @author xianzw
  * @date 2020年5月23日下午8:50:30
  */
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class UserVO extends BaseVO{
 
 	/**

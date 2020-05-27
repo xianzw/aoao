@@ -1,19 +1,18 @@
 package com.xianzw.aoao.controller.user;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xianzw.aoao.common.ServiceException;
-import com.xianzw.aoao.common.UserContext;
 import com.xianzw.aoao.controller.common.BaseController;
 import com.xianzw.aoao.controller.common.HttpResult;
 import com.xianzw.aoao.entity.user.User;
-import com.xianzw.aoao.model.dto.login.LoginUserDTO;
-import com.xianzw.aoao.service.IUserService;
+import com.xianzw.aoao.service.login.ILoginService;
+import com.xianzw.aoao.service.user.IUserService;
+
+import lombok.extern.log4j.Log4j2;
 
 /**
  * <p>
@@ -25,18 +24,18 @@ import com.xianzw.aoao.service.IUserService;
  */
 @RestController
 @RequestMapping("/user")
+@Log4j2
 public class UserController extends BaseController{
 	
 	@Autowired
 	IUserService userService;
 	
+	@Autowired
+	ILoginService loginService;
 	
 	@RequestMapping("/helloWorld")
-	public HttpResult<List<User>> helloWorld() {
-		List<User> list = userService.list();
-		LoginUserDTO currentUser = UserContext.getCurrentUser();
-		System.out.println(currentUser);
-		return responseSuccess(list);
+	public HttpResult<?> helloWorld() {
+		return responseSuccess(loginService.getLoginUser());
 	}
 	
 	@RequestMapping("/getUserById")

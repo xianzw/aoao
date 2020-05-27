@@ -1,23 +1,20 @@
 package com.xianzw.aoao.model.vo.common;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.Version;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 基础VO
  * @author xianzw
  * @date 2020年5月23日下午8:49:02
  */
-@Getter
-@Setter
+@Data
+@Accessors(chain = true)
 public class BaseVO implements Serializable{
 
 	/**

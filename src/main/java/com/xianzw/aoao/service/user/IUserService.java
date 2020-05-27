@@ -1,4 +1,4 @@
-package com.xianzw.aoao.service;
+package com.xianzw.aoao.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xianzw.aoao.common.ServiceException;

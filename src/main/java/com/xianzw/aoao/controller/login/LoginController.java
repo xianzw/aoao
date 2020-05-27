@@ -19,7 +19,7 @@ import com.xianzw.aoao.controller.common.HttpResult;
 import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.model.constant.Constant;
 import com.xianzw.aoao.model.vo.login.UserVO;
-import com.xianzw.aoao.service.IUserService;
+import com.xianzw.aoao.service.user.IUserService;
 
 /**
  * 登录

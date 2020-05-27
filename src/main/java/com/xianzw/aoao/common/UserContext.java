@@ -1,7 +1,5 @@
 package com.xianzw.aoao.common;
 
-import com.xianzw.aoao.model.dto.login.LoginUserDTO;
-
 /**
  * user上下文
  * @author xianzw
@@ -10,13 +8,13 @@ import com.xianzw.aoao.model.dto.login.LoginUserDTO;
 public class UserContext implements AutoCloseable{
 
 	
-	static final ThreadLocal<LoginUserDTO> current = new ThreadLocal<>();
+	static final ThreadLocal<String> current = new ThreadLocal<>();
 	 
-    public UserContext(LoginUserDTO loginUserDTO) {
-        current.set(loginUserDTO);
+    public UserContext(String username) {
+        current.set(username);
     }
  
-    public static LoginUserDTO getCurrentUser() {
+    public static String getCurrentUser() {
         return current.get();
     }
  
