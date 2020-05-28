@@ -2,10 +2,9 @@ package com.xianzw.aoao.service.user.impl;
 
 import java.time.LocalDateTime;
 
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,7 +13,6 @@ import com.xianzw.aoao.config.shiro.ShiroUtil;
 import com.xianzw.aoao.entity.user.User;
 import com.xianzw.aoao.mapper.user.UserMapper;
 import com.xianzw.aoao.service.user.IUserService;
-import com.xianzw.aoao.utils.BeanUtil;
 
 import cn.hutool.core.util.ObjectUtil;
 
@@ -30,6 +28,7 @@ import cn.hutool.core.util.ObjectUtil;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
 	@Override
+	@Transactional(readOnly = true)
 	public User getUserById(String id) throws ServiceException {
 		if(ObjectUtil.isEmpty(id)) {
 			throw new ServiceException("30001", "id不能为空");
@@ -41,6 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	 * 根据用户名获取user
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public User getUserByUsername(String username) {
 		QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
 		queryWrapper.eq("username", username);
@@ -51,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	 * 用户注册
 	 */
 	@Override
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,noRollbackFor = RuntimeException.class)
 	public User signup(User user) {
 		//生成盐
         String salt = ShiroUtil.generateSalt();

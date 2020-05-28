@@ -16,6 +16,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import com.xianzw.aoao.config.jwt.JwtFilter;
 import com.xianzw.aoao.config.shiro.cache.CustomCacheManager;
@@ -26,6 +27,7 @@ import com.xianzw.aoao.config.shiro.cache.CustomCacheManager;
  * @date 2020年5月8日下午4:50:20
  *
  */
+@Order(1)
 @Configuration
 public class ShiroConfig {
 
